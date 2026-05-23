@@ -3,265 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LKHACKERS | MATRIX PORTAL</title>
+    <title>LK-HACKERS ARSENAL</title>
     <style>
-        :root { 
-            --accent: #ffcc00; 
-            --dim-accent: #332a00; 
-            --bg: #000; 
-            --panel-bg: rgba(0, 0, 0, 0.85); 
-            --font-family: 'Courier New', monospace; 
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body { 
-            background-color: var(--bg); 
-            color: #eee; 
-            font-family: var(--font-family);
-            overflow: hidden;
-            height: 100vh;
+        /* 1. ප්‍රධාන පසුබිම සහ Font සෙටින්ග්ස් */
+        body {
+            background-color: #0a0a0a;
+            color: #00ff41;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-        }
-
-        #matrix { 
-            position: fixed; 
-            top: 0; left: 0; 
-            z-index: 1; 
-            opacity: 0.5; 
-        }
-
-        #loader {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            z-index: 10000;
-        }
-        .load-text { color: var(--accent); font-size: 1.1rem; margin-bottom: 20px; letter-spacing: 3px; text-transform: uppercase; font-weight: bold; }
-        .progress-bar { width: 75%; max-width: 320px; height: 3px; background: #111; border: 1px solid var(--dim-accent); }
-        .progress-fill { height: 100%; background: var(--accent); width: 0%; box-shadow: 0 0 15px var(--accent); transition: width 0.3s; }
-
-        #ui-wrapper {
-            position: relative;
-            z-index: 10; 
-            height: 100vh;
-            display: none; 
-            flex-direction: column;
         }
 
-        nav {
-            background: rgba(0, 0, 0, 0.95);
-            border-bottom: 2px solid var(--accent);
-            padding: 12px 20px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .logo { color: var(--accent); font-weight: bold; font-size: 1.1rem; text-shadow: 0 0 10px var(--accent); letter-spacing: 1px; }
-
-        .main-container {
-            width: 100%;
-            padding: 10px;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            flex-grow: 1;
-            overflow-y: auto;
-        }
-
-        @media (min-width: 900px) {
-            .main-container { grid-template-columns: 1fr 320px; padding: 25px; overflow: hidden; }
-        }
-
-        .terminal-wrapper {
-            border: 1px solid var(--accent); 
-            background: var(--panel-bg);
-            height: 450px; 
-            display: flex; 
-            flex-direction: column;
-            box-shadow: inset 0 0 20px rgba(255, 204, 0, 0.1);
-        }
-
-        @media (min-width: 900px) { .terminal-wrapper { height: 100%; } }
-        
-        .term-header { background: var(--dim-accent); color: var(--accent); padding: 10px; font-weight: bold; font-size: 0.8rem; border-bottom: 1px solid var(--accent); display: flex; justify-content: space-between; }
-        
-        #output { flex-grow: 1; overflow-y: auto; padding: 15px; font-size: 0.9rem; line-height: 1.6; }
-        .input-area { border-top: 1px solid var(--dim-accent); padding: 12px; display: flex; align-items: center; background: #000; }
-        #prompt { color: var(--accent); font-weight: bold; margin-right: 10px; }
-        input { background: transparent; border: none; color: #fff; outline: none; flex-grow: 1; font-family: inherit; font-size: 1rem; width: 100%; }
-
-        .sidebar { display: flex; flex-direction: column; gap: 15px; }
-        .sidebar-panel { border: 1px solid var(--accent); background: var(--panel-bg); padding: 15px; }
-        .sidebar-panel h3 { color: var(--accent); font-size: 0.9rem; margin-bottom: 12px; border-bottom: 1px solid var(--accent); padding-bottom: 5px; text-transform: uppercase; }
-        
-        /* START HACKING BUTTON STYLE */
-        .btn-start {
-            display: block;
-            width: 100%;
-            background: var(--accent);
-            color: #000;
+        /* 2. Header (ටීම් එකේ නම) */
+        .header {
             text-align: center;
-            padding: 12px;
-            font-weight: bold;
-            text-decoration: none;
-            text-transform: uppercase;
-            transition: 0.3s;
-            border: none;
-            cursor: pointer;
-            font-family: inherit;
-        }
-        .btn-start:hover {
-            background: #fff;
-            box-shadow: 0 0 20px var(--accent);
+            margin-bottom: 30px;
+            border-bottom: 2px dashed #00ff41;
+            width: 100%;
+            max-width: 800px;
+            padding-bottom: 10px;
         }
 
-        .status-item { font-size: 0.75rem; margin-bottom: 8px; display: flex; justify-content: space-between; }
-        .hl { color: var(--accent); font-weight: bold; }
-        
-        #digital-clock { color: var(--accent); font-size: 1.4rem; font-weight: bold; text-align: center; padding: 12px; background: #000; border-top: 1px solid var(--dim-accent); letter-spacing: 3px; }
-        footer { background: #000; padding: 10px; text-align: center; font-size: 0.65rem; color: #666; border-top: 1px solid var(--dim-accent); }
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.7);
+        }
+
+        .header p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* 3. ටූල්ස් ටික පෙළගස්වන Grid එක (PC සහ Mobile දෙකටම හැඩගැහෙනවා) */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        /* 4. Tools වල Cards (බටන්ස්) */
+        .tool-card {
+            background-color: #121212;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* මවුස් එක උඩට යද්දී වෙනස් වන ලස්සන Effect එක */
+        .tool-card:hover {
+            border-color: #00ff41;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .tool-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+            color: #ffffff;
+        }
+
+        .tool-card p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #8cc8ff;
+        }
+
+        /* Terminal Footer */
+        .footer {
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: #444;
+        }
     </style>
 </head>
 <body>
 
-<div id="loader">
-    <div class="load-text" id="status-msg">BYPASSING GATEWAY...</div>
-    <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
-</div>
-
-<canvas id="matrix"></canvas>
-
-<div id="ui-wrapper">
-    <nav>
-        <div class="logo">LKHACKERS ELITE</div>
-        <div style="font-size: 0.7rem; color: var(--accent); font-weight: bold;">[ STRIKE MODE: ACTIVE ]</div>
-    </nav>
-
-    <div class="main-container">
-        <div class="terminal-wrapper">
-            <div class="term-header">
-                <span>ROOT_PORTAL: GREY_HAT_v18</span>
-                <span style="color: #0f0;">● ONLINE</span>
-            </div>
-            <div id="output">
-                <div class="hl">[ ACCESS GRANTED - OPERATOR: GREY HAT ]</div>
-                <div style="color:#444;">--------------------------------------------------</div>
-                <div> > <span class="hl">trace -n [num]</span> : Phone Lookup</div>
-                <div> > <span class="hl">trace -ip [ip]</span> : IP Map Locate</div>
-                <div> > <span class="hl">clear</span>        : Wipe Screen</div>
-                <div style="color:#444;">--------------------------------------------------</div><br>
-            </div>
-            <div class="input-area">
-                <span id="prompt">root#</span>
-                <input type="text" id="cmdInput" autofocus autocomplete="off" placeholder="Enter command...">
-            </div>
-        </div>
-
-        <div class="sidebar">
-            <!-- NEW ACTION PANEL WITH BUTTON -->
-            <div class="sidebar-panel">
-                <h3>OPERATIONS</h3>
-                <a href="https://github.com/LK-HACKERS/LK-HACKERS" target="_blank" class="btn-start">
-                    START HACKING
-                </a>
-            </div>
-
-            <div class="sidebar-panel">
-                <h3>SYSTEM STATUS</h3>
-                <div class="status-item"><span>OS:</span> <span class="hl" id="os-info">Detecting...</span></div>
-                <div class="status-item"><span>BROWSER:</span> <span class="hl" id="browser-info">Detecting...</span></div>
-                <div class="status-item"><span>ACCESS:</span> <span style="color: #0f0;">ENCRYPTED</span></div>
-            </div>
-        </div>
+    <div class="header">
+        <h1>LK-HACKERS // ARSENAL</h1>
+        <p>GRAY HAT MULTI-TOOL FRAMEWORK v1.0</p>
     </div>
 
-    <div id="digital-clock">00:00:00</div>
-    <footer>SRI LANKA CYBER DEFENSE | GREY HAT PORTAL © 2026</footer>
-</div>
+    <div class="tools-grid">
+        
+        <div class="tool-card" onclick="alert('IP Tracker Opening...')">
+            <h3>[01] IP Geolocation</h3>
+            <p>Track IP target details & ISP</p>
+        </div>
 
-<script>
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
-    let width, height, columns, drops;
+        <div class="tool-card" onclick="alert('Port Scanner Opening...')">
+            <h3>[02] Port Scanner</h3>
+            <p>Scan target open ports</p>
+        </div>
 
-    function initMatrix() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-        columns = Math.floor(width / 20);
-        drops = Array(columns).fill(1);
-    }
+        <div class="tool-card" onclick="alert('OSINT Opening...')">
+            <h3>[03] OSINT Framework</h3>
+            <p>Social identity tracking</p>
+        </div>
 
-    function drawMatrix() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-        ctx.fillRect(0, 0, width, height);
-        ctx.fillStyle = "#ffcc00"; 
-        ctx.font = "15px monospace";
-        for (let i = 0; i < drops.length; i++) {
-            const text = String.fromCharCode(Math.random() * 128);
-            ctx.fillText(text, i * 20, drops[i] * 20);
-            if (drops[i] * 20 > height && Math.random() > 0.975) drops[i] = 0;
-            drops[i]++;
-        }
-    }
-    initMatrix();
-    setInterval(drawMatrix, 50);
+        <div class="tool-card" onclick="alert('Phishing Guard Opening...')">
+            <h3>[04] Phishing Guard</h3>
+            <p>Analyze links for malware</p>
+        </div>
 
-    function detect() {
-        const ua = navigator.userAgent;
-        let os = "Linux";
-        if(ua.includes("Win")) os = "Windows";
-        if(ua.includes("Android")) os = "Android";
-        if(ua.includes("iPhone")) os = "iOS";
-        document.getElementById('os-info').innerText = os;
-        document.getElementById('browser-info').innerText = "Webview/Secure";
-    }
+    </div>
 
-    let loadWidth = 0;
-    const loaderInterval = setInterval(() => {
-        loadWidth += Math.floor(Math.random() * 10) + 5;
-        if (loadWidth >= 100) {
-            loadWidth = 100;
-            clearInterval(loaderInterval);
-            setTimeout(() => {
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('ui-wrapper').style.display = 'flex';
-                detect();
-            }, 500);
-        }
-        document.getElementById('fill').style.width = loadWidth + '%';
-    }, 150);
+    <div class="footer">
+        [ SYSTEM: SECURE TUNNEL ACTIVE ]
+    </div>
 
-    setInterval(() => {
-        document.getElementById('digital-clock').innerText = new Date().toLocaleTimeString();
-    }, 1000);
-
-    const cmdInput = document.getElementById('cmdInput');
-    const output = document.getElementById('output');
-
-    cmdInput.addEventListener('keydown', async (e) => {
-        if (e.key === 'Enter') {
-            const val = cmdInput.value;
-            if(!val) return;
-            output.innerHTML += `<div><span class="hl">root#</span> ${val}</div>`;
-            
-            const lower = val.toLowerCase().trim();
-            if (lower.startsWith('trace -n')) {
-                output.innerHTML += `<div style="color: #0f0;">[!] Pulling OSINT data...</div>`;
-                await new Promise(r => setTimeout(r, 1500));
-                output.innerHTML += `<div style="border:1px solid #ffcc00; padding:8px; margin:5px 0;">[+] TARGET: SRI LANKA 🇱🇰</div>`;
-            } else if (lower === 'clear') {
-                output.innerHTML = "";
-            }
-            cmdInput.value = "";
-            output.scrollTop = output.scrollHeight;
-        }
-    });
-
-    window.addEventListener('resize', initMatrix);
-</script>
 </body>
 </html>
