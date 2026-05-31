@@ -2,123 +2,585 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LK-HACKERS ARSENAL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>LK-HACKERS | Gray Hat Cyber Collective</title>
+    <meta name="description" content="LK-HACKERS Gray Hat Team - Ethical Hacking, CTF, Certifications, Kali Linux, Termux, Bug Bounty">
+    <!-- Google Fonts & Font Awesome 6 -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* 1. ප්‍රධාන පසුබිම සහ Font සෙටින්ග්ස් */
-        body {
-            background-color: #0a0a0a;
-            color: #00ff41;
-            font-family: 'Courier New', Courier, monospace;
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #03060b;
+            font-family: 'Inter', 'JetBrains Mono', monospace;
+            color: #eef5ff;
+            overflow-x: hidden;
+        }
+
+        /* PRELOADER (LOADING PAGE) */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #010101;
+            z-index: 9999;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
+            backdrop-filter: blur(2px);
         }
 
-        /* 2. Header (ටීම් එකේ නම) */
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 2px dashed #00ff41;
+        .loading-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-glitch {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: 6px;
+            background: linear-gradient(45deg, #2ecc71, #0e8b46, #0a5c2e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: pulseGlow 1.8s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% { text-shadow: 0 0 2px #2ecc71; opacity: 0.9; }
+            100% { text-shadow: 0 0 18px #2ecc71; opacity: 1; }
+        }
+
+        .loader-progress {
+            width: 220px;
+            height: 3px;
+            background: #1f2a2f;
+            margin-top: 25px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .loader-progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #2ecc71;
+            animation: loadProgress 1.5s ease forwards;
+            box-shadow: 0 0 6px #2ecc71;
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            70% { width: 85%; }
+            100% { width: 100%; }
+        }
+
+        .site-wrapper {
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .site-wrapper.visible {
+            opacity: 1;
+        }
+
+        /* CANVAS HACKER ANIMATION */
+        #hackerCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 800px;
-            padding-bottom: 10px;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .header h1 {
-            font-size: 2.5rem;
-            margin: 0;
-            text-shadow: 0 0 10px rgba(0, 255, 65, 0.7);
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px 24px;
         }
 
-        .header p {
-            color: #888;
-            font-size: 0.9rem;
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 10px 0 20px;
+            border-bottom: 1px solid rgba(46, 204, 113, 0.3);
+            margin-bottom: 20px;
         }
 
-        /* 3. ටූල්ස් ටික පෙළගස්වන Grid එක (PC සහ Mobile දෙකටම හැඩගැහෙනවා) */
-        .tools-grid {
+        .logo h1 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #2ecc71);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo p {
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            color: #8ba0b0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #ccdeee;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: #2ecc71;
+            text-shadow: 0 0 5px #2ecc71;
+        }
+
+        .section-card {
+            background: rgba(8, 14, 18, 0.75);
+            backdrop-filter: blur(6px);
+            border-radius: 32px;
+            padding: 1.8rem;
+            margin: 2.5rem 0;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            transition: 0.2s;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            border-left: 5px solid #2ecc71;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .grid-2 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            width: 100%;
-            max-width: 800px;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 1.8rem;
         }
 
-        /* 4. Tools වල Cards (බටන්ස්) */
-        .tool-card {
-            background-color: #121212;
-            border: 1px solid #1e293b;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
+        .info-card {
+            background: #0b1119;
+            border-radius: 24px;
+            padding: 1.5rem;
+            border-bottom: 3px solid #2ecc71;
+            transition: 0.2s;
+        }
+
+        .info-card i {
+            font-size: 2.2rem;
+            color: #2ecc71;
+            margin-bottom: 12px;
+        }
+
+        .platform-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #10161e;
+            padding: 8px 20px;
+            border-radius: 60px;
+            margin: 6px;
+            font-weight: 600;
+            border: 0.5px solid #2ecc7144;
+        }
+
+        .btn-outline {
+            display: inline-block;
+            background: transparent;
+            border: 1.5px solid #2ecc71;
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: #2ecc71;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.25s;
+            margin: 8px 6px 0 0;
+            font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
 
-        /* මවුස් එක උඩට යද්දී වෙනස් වන ලස්සන Effect එක */
-        .tool-card:hover {
-            border-color: #00ff41;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+        .btn-outline:hover {
+            background: #2ecc71;
+            color: #03060b;
+            box-shadow: 0 0 14px #2ecc71;
+        }
+
+        .command-block {
+            background: #03070e;
+            padding: 12px 16px;
+            border-radius: 20px;
+            font-family: monospace;
+            margin: 16px 0;
+            border-left: 4px solid #2ecc71;
+            overflow-x: auto;
+        }
+
+        .command-block code {
+            display: block;
+            color: #86efac;
+            margin: 8px 0;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .url-block {
+            background: #07100e;
+            border-radius: 20px;
+            padding: 0.8rem 1rem;
+            margin: 0.6rem 0;
+            word-break: break-all;
+            font-size: 0.85rem;
+            border-left: 3px solid #2ecc71;
+        }
+
+        .url-block a {
+            color: #6ef0a3;
+            text-decoration: none;
+        }
+
+        .url-block a:hover {
+            text-decoration: underline;
+        }
+
+        .ctf-platform-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0 10px;
+            justify-content: center;
+        }
+
+        .ctf-card {
+            background: #0f1820;
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            flex: 1;
+            min-width: 160px;
+            transition: 0.2s;
+            border: 1px solid #2ecc7144;
+        }
+
+        .ctf-card i {
+            font-size: 2rem;
+            color: #2ecc71;
+            margin-bottom: 8px;
+        }
+
+        .ctf-card a {
+            color: #eef5ff;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-top: 1px solid #1a2a2a;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+
+        .social-icons a {
+            font-size: 1.6rem;
+            margin-left: 1rem;
+            color: #b0c4de;
+            transition: 0.2s;
+        }
+
+        .social-icons a:hover {
+            color: #2ecc71;
             transform: translateY(-3px);
         }
 
-        .tool-card h3 {
-            margin: 0 0 10px 0;
-            font-size: 1.2rem;
-            color: #ffffff;
-        }
-
-        .tool-card p {
-            margin: 0;
-            font-size: 0.85rem;
-            color: #8cc8ff;
-        }
-
-        /* Terminal Footer */
-        .footer {
-            margin-top: 40px;
-            font-size: 0.8rem;
-            color: #444;
+        @media (max-width: 750px) {
+            .container { padding: 12px 16px; }
+            .navbar { flex-direction: column; gap: 12px; text-align: center; }
+            .section-title { font-size: 1.5rem; }
+            .loader-glitch { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>LK-HACKERS // ARSENAL</h1>
-        <p>GRAY HAT MULTI-TOOL FRAMEWORK v1.0</p>
+<!-- LOADING PAGE -->
+<div class="loading-screen" id="loadingScreen">
+    <div class="loader-glitch">LK-HACKERS</div>
+    <div class="loader-progress"><div class="loader-progress-bar"></div></div>
+    <p style="margin-top: 20px; font-size: 0.8rem;">initializing gray hat arsenal...</p>
+    <p style="font-size: 0.7rem; color: #6c8f7c;">#EthicalHacking | #GreyHat | #LK</p>
+</div>
+
+<!-- CANVAS BACKGROUND ANIMATION -->
+<canvas id="hackerCanvas"></canvas>
+
+<div class="site-wrapper" id="siteWrapper">
+    <div class="container">
+        <!-- Navigation -->
+        <div class="navbar">
+            <div class="logo">
+                <h1>LK-HACKERS <span style="font-size: 0.8rem;">⚡</span></h1>
+                <p>Gray Hat Cyber Collective | Sri Lanka</p>
+            </div>
+            <div class="nav-links">
+                <a href="#">HOME</a>
+                <a href="#about-gray">GRAY HAT</a>
+                <a href="#learning-path">LEARNING PATH</a>
+                <a href="#setup-guide">SETUP + COMMANDS</a>
+                <a href="#connect">CONNECT</a>
+                <a href="#all-urls">LINKS</a>
+            </div>
+        </div>
+
+        <!-- GRAY HAT INTRODUCTION -->
+        <div class="section-card" id="about-gray">
+            <h2 class="section-title">🛡️ GRAY HAT | LK-HACKERS WAY</h2>
+            <p style="font-size: 1.1rem; line-height: 1.5;"><strong class="glow">Gray Hat Hacking</strong> is the method of finding & fixing vulnerabilities within legal limits — but sometimes without explicit permission. We never cause damage. We disclose responsibly. <br><br> 
+            <strong>LK-HACKERS</strong> operates as a <strong class="text-green">Gray Hat team</strong> combining technical excellence, bug bounty ethics, and continuous learning. Our motto: <em>"Find flaw, fix flaw, no destruction."</em></p>
+            <div style="margin-top: 20px;">
+                <span class="btn-outline" style="cursor:default;">✔️ Permission first (Bug Bounty)</span>
+                <span class="btn-outline" style="cursor:default;">🔐 No Data Damage</span>
+                <span class="btn-outline" style="cursor:default;">🌐 VPN + ProxyChains</span>
+            </div>
+        </div>
+
+        <!-- Environment Setup + Platform Icons -->
+        <div class="section-card">
+            <h2 class="section-title">💻 ENVIRONMENT SETUP | YOUR LAB</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 20px;">
+                <div class="platform-badge"><i class="fab fa-android"></i> Termux (Android)</div>
+                <div class="platform-badge"><i class="fab fa-linux"></i> Kali Linux</div>
+                <div class="platform-badge"><i class="fab fa-ubuntu"></i> Ubuntu</div>
+                <div class="platform-badge"><i class="fas fa-terminal"></i> iSH Shell (iOS)</div>
+                <div class="platform-badge"><i class="fas fa-shield-haltered"></i> TryHackMe</div>
+                <div class="platform-badge"><i class="fas fa-cube"></i> Hack The Box</div>
+                <div class="platform-badge"><i class="fas fa-flag-checkered"></i> OverTheWire CTF</div>
+            </div>
+        </div>
+
+        <!-- HOW TO START + COMMANDS SECTION -->
+        <div class="section-card" id="setup-guide">
+            <h2 class="section-title">🚀 HOW TO START | ESSENTIAL COMMANDS</h2>
+            <div class="command-block">
+                <i class="fas fa-terminal" style="color:#2ecc71"></i> <strong>Step 1: Update & Upgrade (First Command Ever)</strong><br>
+                <code>sudo apt update && sudo apt upgrade -y</code> (Kali Linux / Ubuntu)<br>
+                <code>pkg update && pkg upgrade</code> (Termux - Android)<br>
+                <code>apk update && apk upgrade</code> (iSH - iOS)
+            </div>
+            <div class="command-block">
+                <i class="fas fa-tools"></i> <strong>Step 2: Install Essential Tools</strong><br>
+                <code>sudo apt install git python3 nmap wireshark gobuster dirb -y</code><br>
+                <code>pip3 install requests scapy beautifulsoup4</code><br>
+                <code>git clone https://github.com/LK-HACKERS/LK-HACKERS.git</code>
+            </div>
+            <div class="command-block">
+                <i class="fas fa-shield-alt"></i> <strong>Step 3: Setup Anonymity (VPN + ProxyChains)</strong><br>
+                <code>sudo apt install proxychains4 tor -y</code><br>
+                <code>sudo systemctl start tor</code><br>
+                <code>proxychains nmap -sT target.com</code>
+            </div>
+            <div class="command-block">
+                <i class="fas fa-flag-checkered"></i> <strong>Step 4: Start CTF Platforms (For Beginners)</strong><br>
+                ➜ <strong>TryHackMe:</strong> <code>https://tryhackme.com/</code> - Start with "Pre Security" path<br>
+                ➜ <strong>OverTheWire Bandit:</strong> <code>ssh bandit0@bandit.labs.overthewire.org -p 2220</code><br>
+                ➜ <strong>Hack The Box:</strong> Create account → Starting Point machines
+            </div>
+            <p style="margin-top: 12px;">🎯 <strong>Beginner Roadmap:</strong> Linux CLI → Networking basics → Python scripting → TryHackMe rooms → HTB machines → Bug Bounty.</p>
+        </div>
+
+        <!-- LEARNING PATH (SYLLABUS, CERTIFICATIONS, CTF) -->
+        <div class="section-card" id="learning-path">
+            <h2 class="section-title">📖 SYLLABUS + CERTIFICATIONS + CTF PRACTICE</h2>
+            <div class="grid-2">
+                <div class="info-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Core Lessons</h3>
+                    <ul style="margin-left: 1.2rem; margin-top: 8px;">
+                        <li>Lesson 1: Linux Fundamentals & CLI</li>
+                        <li>Lesson 2: Networking Deep Dive</li>
+                        <li>Lesson 3: Information Gathering (Recon)</li>
+                        <li>Lesson 4: Vulnerability Analysis</li>
+                        <li>Lesson 5: Exploitation (The "Hack")</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Scripting & Automation</h3>
+                    <p>Gray Hat hackers build custom tools.</p>
+                    <ul style="margin-top: 8px; margin-left: 1.2rem;">
+                        <li>Bash Scripting → speed up recon</li>
+                        <li>Python for Hackers (Sockets, Requests, Brute Force)</li>
+                        <li>Build your own auto-reporting tools</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-certificate"></i>
+                    <h3>Recommended Certs</h3>
+                    <p>eJPT | PNPT | CEH (Practical) | OSCP <br> Hands-on > theory</p>
+                    <h3 style="margin-top: 10px;">🏁 CTF Challenges</h3>
+                    <p>TryHackMe, Hack The Box, OverTheWire (Bandit, Leviathan).</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-chalkboard-user"></i>
+                    <h3>Courses & Roadmap</h3>
+                    <p>Start from Linux → Networking → Python → Bug Bounty. Use PortSwigger Academy, PentesterLab.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRAY HAT RULES -->
+        <div class="section-card">
+            <h2 class="section-title">⚖️ GRAY HAT RULES (CODE OF CONDUCT)</h2>
+            <div class="grid-2">
+                <div class="info-card"><i class="fas fa-file-contract"></i><h3>✔️ Permission</h3><p>Always work within authorized bug bounty programs.</p></div>
+                <div class="info-card"><i class="fas fa-trash-alt"></i><h3>❌ No Damage</h3><p>Never delete, encrypt or leak data.</p></div>
+                <div class="info-card"><i class="fas fa-mask"></i><h3>🌐 Stay Anonymous</h3><p>Learn VPN, ProxyChains, Tor.</p></div>
+                <div class="info-card"><i class="fas fa-handshake"></i><h3>📢 Ethical Disclosure</h3><p>Responsible disclosure: give vendors time to patch.</p></div>
+            </div>
+        </div>
+
+        <!-- CTF PLATFORMS SECTION (DIRECT URLS) -->
+        <div class="section-card">
+            <h2 class="section-title">🎯 CTF & PRACTICE PLATFORMS (OFFICIAL)</h2>
+            <div class="ctf-platform-grid">
+                <div class="ctf-card"><i class="fas fa-cube"></i><h3>Hack The Box</h3><a href="https://www.hackthebox.com/" target="_blank">https://www.hackthebox.com/</a><div style="margin-top:8px;"><span class="btn-outline" style="font-size:0.7rem;" onclick="window.open('https://www.hackthebox.com/','_blank')">Visit HTB →</span></div></div>
+                <div class="ctf-card"><i class="fas fa-terminal"></i><h3>OverTheWire</h3><a href="https://overthewire.org/wargames/" target="_blank">https://overthewire.org/wargames/</a><div style="margin-top:8px;"><span class="btn-outline" style="font-size:0.7rem;" onclick="window.open('https://overthewire.org/wargames/','_blank')">Play Wargames →</span></div></div>
+                <div class="ctf-card"><i class="fas fa-shield-haltered"></i><h3>TryHackMe</h3><a href="https://tryhackme.com/" target="_blank">https://tryhackme.com/</a><div style="margin-top:8px;"><span class="btn-outline" style="font-size:0.7rem;" onclick="window.open('https://tryhackme.com/','_blank')">Start Learning →</span></div></div>
+            </div>
+        </div>
+
+        <!-- ALL URLS & LINKS SECTION -->
+        <div class="section-card" id="all-urls">
+            <h2 class="section-title">🔗 LK-HACKERS OFFICIAL LINKS & RESOURCES</h2>
+            <div class="url-block"><i class="fas fa-globe"></i> <strong>Main Website:</strong> <a href="https://lk-hackers.github.io/LK-HACKERS-WebSite/" target="_blank">https://lk-hackers.github.io/LK-HACKERS-WebSite/</a></div>
+            <div class="url-block"><i class="fas fa-comments"></i> <strong>Call & Chat Rooms:</strong> <a href="https://lk-hackers.github.io/LK-HACKERS-WebSite-ChatRoom/" target="_blank">https://lk-hackers.github.io/LK-HACKERS-WebSite-ChatRoom/</a></div>
+            <div class="url-block"><i class="fab fa-github"></i> <strong>GitHub Organization:</strong> <a href="https://github.com/LK-HACKERS" target="_blank">https://github.com/LK-HACKERS</a></div>
+            <div class="url-block"><i class="fab fa-github"></i> <strong>Hacking Tools Repository:</strong> <a href="https://github.com/LK-HACKERS/LK-HACKERS" target="_blank">https://github.com/LK-HACKERS/LK-HACKERS</a></div>
+            <div class="url-block"><i class="fab fa-whatsapp"></i> <strong>WhatsApp Help Group / JOIN:</strong> <a href="https://chat.whatsapp.com/Kw3tqUAXcl49NfnY2E7Twd" target="_blank">https://chat.whatsapp.com/Kw3tqUAXcl49NfnY2E7Twd</a></div>
+            <div class="url-block"><i class="fab fa-whatsapp"></i> <strong>WhatsApp Help Group (Same Link):</strong> <a href="https://chat.whatsapp.com/Kw3tqUAXcl49NfnY2E7Twd" target="_blank">https://chat.whatsapp.com/Kw3tqUAXcl49NfnY2E7Twd</a></div>
+            <div class="url-block"><i class="fab fa-whatsapp"></i> <strong>Dark Web Group (WhatsApp):</strong> <a href="https://chat.whatsapp.com/EWNzfAmCa8B4Y0pOajdWBE" target="_blank">https://chat.whatsapp.com/EWNzfAmCa8B4Y0pOajdWBE</a></div>
+            <div class="url-block"><i class="fab fa-tiktok"></i> <strong>TikTok Account:</strong> <a href="https://www.tiktok.com/@milhan.yenith?_r=1&_t=ZS-96oNL0JDjaK" target="_blank">https://www.tiktok.com/@milhan.yenith</a></div>
+            <div class="url-block"><i class="fas fa-phone-alt"></i> <strong>WhatsApp Contact Number:</strong> +94 74 051 7563</div>
+            <div class="url-block"><i class="fas fa-flag-checkered"></i> <strong>CTF Platforms (Practice Here):</strong><br>🔹 <a href="https://www.hackthebox.com/" target="_blank">Hack The Box - hackthebox.com</a><br>🔹 <a href="https://overthewire.org/wargames/" target="_blank">OverTheWire Wargames - overthewire.org</a><br>🔹 <a href="https://tryhackme.com/" target="_blank">TryHackMe - tryhackme.com</a></div>
+        </div>
+
+        <!-- PLATFORM BADGES -->
+        <div style="text-align: center; margin: 30px 0 15px;">
+            <span class="platform-badge"><i class="fab fa-linux"></i> Kali Linux</span>
+            <span class="platform-badge"><i class="fab fa-android"></i> Termux</span>
+            <span class="platform-badge"><i class="fas fa-crown"></i> Hack The Box</span>
+            <span class="platform-badge"><i class="fas fa-terminal"></i> OverTheWire</span>
+            <span class="platform-badge"><i class="fas fa-chalkboard"></i> TryHackMe</span>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer-links" id="connect">
+            <div>© 2026 LK-HACKERS — Gray Hat Hackers | Sri Lanka</div>
+            <div class="social-icons">
+                <a href="https://github.com/LK-HACKERS" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://chat.whatsapp.com/Kw3tqUAXcl49NfnY2E7Twd" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.tiktok.com/@milhan.yenith?_r=1&_t=ZS-96oNL0JDjaK" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://lk-hackers.github.io/LK-HACKERS-WebSite-ChatRoom/" target="_blank"><i class="fas fa-comment-dots"></i></a>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div class="tools-grid">
-        
-        <div class="tool-card" onclick="alert('IP Tracker Opening...')">
-            <h3>[01] IP Geolocation</h3>
-            <p>Track IP target details & ISP</p>
-        </div>
+<script>
+    // PRELOADER LOGIC
+    window.addEventListener('load', () => {
+        const loader = document.getElementById('loadingScreen');
+        const mainWrapper = document.getElementById('siteWrapper');
+        setTimeout(() => {
+            if (loader) {
+                loader.classList.add('fade-out');
+                mainWrapper.classList.add('visible');
+                setTimeout(() => { loader.style.display = 'none'; }, 800);
+            }
+        }, 1700);
+    });
 
-        <div class="tool-card" onclick="alert('Port Scanner Opening...')">
-            <h3>[02] Port Scanner</h3>
-            <p>Scan target open ports</p>
-        </div>
+    // CANVAS MATRIX HACKER ANIMATION
+    const canvas = document.getElementById('hackerCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height, columns, drops = [];
+    const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン＃＄％＆＠＄＃＠!?<>/\\|[]{}()*&^%$#@KALI";
+    const fontSize = 16;
+    
+    function setupCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+        columns = Math.floor(width / fontSize);
+        drops = [];
+        for (let i = 0; i < columns; i++) drops[i] = Math.random() * -120;
+    }
+    
+    function drawGlitch() {
+        if (!ctx) return;
+        ctx.fillStyle = "rgba(2, 6, 12, 0.09)";
+        ctx.fillRect(0, 0, width, height);
+        ctx.font = fontSize + "px 'Fira Code', 'JetBrains Mono', monospace";
+        for (let i = 0; i < drops.length; i++) {
+            const char = chars[Math.floor(Math.random() * chars.length)];
+            const x = i * fontSize;
+            const y = drops[i] * fontSize;
+            ctx.fillStyle = y > height / 2 ? "#3ecc7a" : "#1f9f5e";
+            if (y > 0 && y < height) ctx.fillText(char, x, y);
+            if (y > height && Math.random() > 0.98) drops[i] = 0;
+            drops[i]++;
+        }
+        requestAnimationFrame(drawGlitch);
+    }
+    
+    window.addEventListener('resize', () => { setupCanvas(); });
+    setupCanvas();
+    drawGlitch();
 
-        <div class="tool-card" onclick="alert('OSINT Opening...')">
-            <h3>[03] OSINT Framework</h3>
-            <p>Social identity tracking</p>
-        </div>
+    // Smooth scroll for navigation
+    document.querySelectorAll('.nav-links a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href && href !== '#' && href.startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>
 
-        <div class="tool-card" onclick="alert('Phishing Guard Opening...')">
-            <h3>[04] Phishing Guard</h3>
-            <p>Analyze links for malware</p>
-        </div>
-
-    </div>
-
-    <div class="footer">
-        [ SYSTEM: SECURE TUNNEL ACTIVE ]
-    </div>
-
+<style>
+    .text-green { color: #2ecc71; }
+    .glow { text-shadow: 0 0 4px #2ecc71; }
+    code { background: #0a121a; padding: 2px 6px; border-radius: 12px; font-family: monospace; color: #adf0b2; }
+    .url-block i { width: 28px; color: #2ecc71; }
+    ::-webkit-scrollbar { width: 5px; background: #0a0f15; }
+    ::-webkit-scrollbar-thumb { background: #2ecc71; border-radius: 10px; }
+</style>
 </body>
 </html>
